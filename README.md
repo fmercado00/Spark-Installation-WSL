@@ -93,3 +93,54 @@ Run this commands
     export PATH=/home/$USER/anaconda3/bin:$PATH
     * Install conda py4j 
     conda install py4j
+
+## Update .bashrc
+Run nano command in your home directory and append the export sentences at the end of the file.
+
+sudo nano .bashrc
+
+nano editor is opened. Paste the following lines.
+
+    ## Path de Java
+    export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+    export PATH=$JAVA_HOME:$PATH
+
+    ## Spark
+    export SPARK_HOME='/home/'$USER'/spark'
+    export PATH=$SPARK_HOME:$PATH
+
+    ## Python para ser utilizable por Spark
+    export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+    export PYSPARK_PYTHON=python3.9
+
+    export PYSPARK_DRIVER_PYTHON="jupyter"
+    export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+    export PATH=/home/spark/anaconda3/bin:$PATH
+
+Press ctl + o to save the file\
+Press enter\
+Press ctl + x to leave nano editor.
+
+Reload the .bashrc
+
+    source .bashrc
+
+## Test Spark installation with spark-submit
+Run the following commands to clone the following repo into Documents directory and test your instalation.
+
+    git clone https://github.com/fmercado00/Spark-Installation-WSL.git Documents
+    cd Documents
+    ~/spark/bin/spark-submit codeExample.py data.csv
+
+The previous test uses the spark-submit to run a python file with code that is available in the examples of Spark web site.
+
+You shoud see a window with this result.
+![title](spark-submit-result.png)
+
+## Test Spark installation with jupyter notebook
+In the Documents directory run:
+
+    jupyter notebook
+
+You should see that jupyter server has started, for example:
+![title](jupyter.png)
