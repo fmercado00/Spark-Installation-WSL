@@ -58,7 +58,7 @@ Run this commands:
 
     ~$ sudo add-apt-repository ppa:deadsnakes/ppa
     ~$ sudo apt update
-    ~$ sudo apt install python3.9
+    ~$ sudo apt install python3.7
 
 ### Install Scala
 Run this commands:
@@ -112,11 +112,11 @@ nano editor is opened. Paste the following lines.
 
     ## Python para ser utilizable por Spark
     export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
-    export PYSPARK_PYTHON=python3.9
+    export PYSPARK_PYTHON=python3.7
 
-    export PYSPARK_DRIVER_PYTHON="jupyter"
+    export PYSPARK_DRIVER_PYTHON="python"
     export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
-    export PATH=/home/spark/anaconda3/bin:$PATH
+    export PATH=/home/$USER/anaconda3/bin:$PATH
 
 Press ctl + o to save the file\
 Press enter\
@@ -158,14 +158,24 @@ Here is the code of the notebook.
     from pyspark import SparkContext
     from pyspark.sql import SparkSession
 
-    # Creando una sesión
+    # Create a session
 
-    # Convención la sesión la creamos con la variable Spark
+    # Convention: spark variable stores the session
     spark = SparkSession.builder \
             .master("local") \
             .appName("miPrimerSesion") \
             .getOrCreate()
 
-    # Importante, siempre indicar a Spark que la sesión termina
-    # de lo contrario consumiremos recursos locales y peor aun en nube
+    # Important, always stop the spark session to release the resources
     spark.stop()
+
+    # Create a conext
+    sc = SparkContext(master="local", appName="miPrimerContexto")
+    # Convert context into a session 
+    spark2 = SparkSession(sc)
+
+    spark2
+
+
+    spark2.stop()
+    sc.stop()
